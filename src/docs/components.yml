@@ -1,0 +1,237 @@
+components:
+  schemas:
+    Producer:
+      type: object
+      properties:
+        name:
+          type: string
+        logo:
+          type: string
+        dateOfFoundation:
+          type: string
+          format: date
+        description:
+          type: string
+        headquarter:
+          type: string
+        site:
+          type: string
+          format: uri
+        scenes:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+      example:
+        id: 5ebac534954b54139806c322
+        logo: /usr/artist/fkartist
+        dateOfFoundation: 1985-04-12T23:20:50.52Z
+        description: best producer of the world
+        headquarter: SP - Brazil
+        site: https://www.cool.com
+        scenes:
+          - id: 5ebac534954b54139806c522
+    Scenes:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        rating:
+          type: integer
+        director:
+          type: string
+        launchDate:
+          type: string
+          format: date
+        thumbnail:
+          type: string
+        filePath:
+          type: string
+          format: uri
+        artists:
+          type: string
+        producer:
+          type: string
+      example:
+        id: 5ebac534954b54139806c344
+        title: fake scene name
+        description: best scene of the world
+        rating: 4
+        director: Director Top
+        launchDate: 1985-04-12T23:20:50.52Z
+        thumbnail: /usr/artist/fkartist
+        artists: 4ebac534954b54139806c344
+        producer: 8ebac534954b54139806c344
+
+    Artist:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        photo:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        description:
+          type: string
+        birthPlace:
+          type: string
+        tags:
+          type: array
+          items:
+            type: object
+            properties:
+              hairColor:
+                type: string
+                enum: [Black, Redhead, Blonde]
+              bodyArt:
+                type: string
+                enum: [Piercings, Tattoos, None]
+              bodyType:
+                type: string
+                enum: [Athletic, Slim, Average Body, Muscular Man, Petite, Average Male Body, Voluptuous]
+              buttType:
+                type: string
+                enum: [Small, Medium, Big]
+              breastSize:
+                type: string
+                enum: [ Small, Medium, Big ]
+              pussyHair:
+                type: string
+                enum: [ Shaved, Hairy ]
+              ethnicity:
+                type: string
+                enum: [ American, Latina, Brazilian, European, Asian ]
+        scenes:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+
+      example:
+        id: 5ebac534954b54139806c322
+        name: fake artist name
+        photo: /usr/artist/fkartist
+        description: best artist of the world
+        dateOfBirth: 1985-04-12T23:20:50.52Z
+        birthPlace: SP - Brazil
+        tags:
+          - hairColor: Black
+            bodyArt: None
+            bodyType: Voluptuous
+            buttType: Big
+            breastSize: Big
+            pussyHair: Hairy
+            ethnicity: Latina
+        scenes:
+          - id: 5ebac534954b54139806c522
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        role:
+          type: string
+          enum: [user, admin]
+      example:
+        id: 5ebac534954b54139806c112
+        email: fake@example.com
+        name: fake name
+        role: user
+
+    Token:
+      type: object
+      properties:
+        token:
+          type: string
+        expires:
+          type: string
+          format: date-time
+      example:
+        token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWJhYzUzNDk1NGI1NDEzOTgwNmMxMTIiLCJpYXQiOjE1ODkyOTg0ODQsImV4cCI6MTU4OTMwMDI4NH0.m1U63blB0MLej_WfB7yC2FTMnCziif9X8yzwDEfJXAg
+        expires: 2020-05-12T16:18:04.793Z
+
+    AuthTokens:
+      type: object
+      properties:
+        access:
+          $ref: '#/components/schemas/Token'
+        refresh:
+          $ref: '#/components/schemas/Token'
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
+
+  responses:
+    DuplicateEmail:
+      description: Email already taken
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Email already taken
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Send a correct body
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 401
+            message: Please authenticate
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 403
+            message: Forbidden
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not found
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

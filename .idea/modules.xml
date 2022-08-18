@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/ppl-api.iml" filepath="$PROJECT_DIR$/.idea/ppl-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ppl-front/.idea/ppl-front.iml" filepath="$PROJECT_DIR$/../ppl-front/.idea/ppl-front.iml" />
+    </modules>
+  </component>
+</project>
